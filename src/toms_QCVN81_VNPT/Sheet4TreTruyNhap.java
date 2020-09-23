@@ -20,25 +20,24 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Sheet4TreTruyNhap {
     XSSFWorkbook templateFile;
     Connection conn;
-    String table;
+    String tablePrefix;
     Integer sheet_idx;
-    String kpi1 = "35.1";
-    String kpi2 = "35.2";
 
-    public Sheet4TreTruyNhap(XSSFWorkbook templateFile, Connection conn, Integer sheet_idx) {
+    public Sheet4TreTruyNhap(XSSFWorkbook templateFile, Connection conn, Integer sheet_idx, String tablePrefix) {
         this.templateFile = templateFile;
         this.conn = conn;
-        this.table = "2020_p0514092020ph2_hgg_data_qcvn";
+//        this.table = "2020_p0514092020ph2_hgg_data_qcvn";
+        this.tablePrefix=tablePrefix;
         this.sheet_idx=sheet_idx;
     }
     public void run(){
         NetworkAccessSuccess3G.InputStruct inputStruct = new NetworkAccessSuccess3G.InputStruct();
         inputStruct.conn = this.conn;
-        inputStruct.table = this.table;
-        inputStruct.operator = 1;
+        inputStruct.table = this.tablePrefix+"_data_qcvn";
+        inputStruct.operator = 2;
         inputStruct.network_type = "3G";
-        inputStruct.kpi1 = "10.1";
-        inputStruct.kpi2 = "10.2";
+        inputStruct.kpi1 = "35.1";
+        inputStruct.kpi2 = "35.2";
         
         NetworkAccessSuccess3G accessSuccess3G = new NetworkAccessSuccess3G(inputStruct);
 

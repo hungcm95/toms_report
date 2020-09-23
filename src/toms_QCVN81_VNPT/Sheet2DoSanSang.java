@@ -27,31 +27,30 @@ public class Sheet2DoSanSang {
 
     XSSFWorkbook templateFile;
     Connection conn;
-    String table;
+    String tablePrefix;
     Integer sheet_idx;
     String imgUrl = "img1.png";
 
-    public Sheet2DoSanSang(XSSFWorkbook templateFile, Connection conn, Integer sheet_idx) {
+    public Sheet2DoSanSang(XSSFWorkbook templateFile, Connection conn, Integer sheet_idx, String tablePrefix) {
         this.templateFile = templateFile;
         this.conn = conn;
-        this.table = "2020_p0514092020ph2_hgg_clvp_qcvn";
+//        this.tablePrefix = "2020_p0514092020ph2_hgg_clvp_qcvn";
+        this.tablePrefix = tablePrefix;
         this.sheet_idx = sheet_idx;
     }
-
-    
 
     public void run() {
         try {
             //lay ket qua tu database
-            NetworkAvailable3G.InputStruct inputStruct=new NetworkAvailable3G.InputStruct();
-            
-            inputStruct.conn=this.conn;
-            inputStruct.table=this.table;
-            inputStruct.operator=2;
-            inputStruct.kpi="20.1";
-            
-            NetworkAvailable3G networkAvailable3G=new NetworkAvailable3G(inputStruct);
-            
+            NetworkAvailable3G.InputStruct inputStruct = new NetworkAvailable3G.InputStruct();
+
+            inputStruct.conn = this.conn;
+            inputStruct.table = this.tablePrefix+"_clvp_qcvn";
+            inputStruct.operator = 2;
+            inputStruct.kpi = "20.1";
+
+            NetworkAvailable3G networkAvailable3G = new NetworkAvailable3G(inputStruct);
+
             NetworkAvailable3G.OutResult result = networkAvailable3G.getData();
 
             XSSFSheet sheet = this.templateFile.getSheetAt(sheet_idx);
@@ -92,15 +91,14 @@ public class Sheet2DoSanSang {
             String strFormula = "N3/N4";
 //            row5.getCell(13).setCellType(HSSFCell.CELL_TYPE_FORMULA);
             row5.getCell(13).setCellFormula(strFormula);
-            
+
             cell_B9.setCellValue(String.format("%.02f", PDF_bad));
-            
+
             //dong 51 cho do thi
             sheet.getRow(50).getCell(2).setCellValue(PDF_bad);
             sheet.getRow(50).getCell(3).setCellValue(PDF_good);
             //dong 52
             sheet.getRow(51).getCell(2).setCellValue(PDF_bad);
-            
 
             //add picture
             InputStream my_banner_image = new FileInputStream(imgUrl);
@@ -127,5 +125,4 @@ public class Sheet2DoSanSang {
 
     }
 
-    
 }

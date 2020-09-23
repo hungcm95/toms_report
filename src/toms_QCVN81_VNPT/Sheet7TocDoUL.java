@@ -20,21 +20,22 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Sheet7TocDoUL {
     XSSFWorkbook templateFile;
     Connection conn;
-    String table;
+    String tablePrefix;
     Integer sheet_idx;
 
-    public Sheet7TocDoUL(XSSFWorkbook templateFile, Connection conn, Integer sheet_idx) {
+    public Sheet7TocDoUL(XSSFWorkbook templateFile, Connection conn, Integer sheet_idx, String tablePrefix) {
         this.templateFile = templateFile;
         this.conn = conn;
-        this.table = "2020_p0514092020ph2_hgg_data_qcvn";
+//        this.table = "2020_p0514092020ph2_hgg_data_qcvn";
         this.sheet_idx = sheet_idx;
+        this.tablePrefix=tablePrefix;
     }
     public void run(){
         GetNetworkSpeedDetail.InputStruct inputStruct=new GetNetworkSpeedDetail.InputStruct();
         inputStruct.conn=this.conn;
-        inputStruct.table=this.table;
+        inputStruct.table=this.tablePrefix+"_data_qcvn";
         inputStruct.operator=2;
-        inputStruct.kpi="12";
+        inputStruct.kpi="36.3";
         inputStruct.network_type="3G";
         GetNetworkSpeedDetail networkSpeedDetail=new GetNetworkSpeedDetail(inputStruct);
         ArrayList<GetNetworkSpeedDetail.OutResult> resultList= networkSpeedDetail.getData();
