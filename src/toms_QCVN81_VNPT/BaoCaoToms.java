@@ -26,7 +26,7 @@ public class BaoCaoToms {
         try {
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://127.0.0.1:3306/kpi_mobifone_2019", "root", "123456");
-            InputStream inp = new FileInputStream("QCVN81_3G_Q2_2020_HGG_Template_Linh.xlsx");
+            InputStream inp = new FileInputStream("QCVN81_Template.xlsx");
             XSSFWorkbook fWorkbook = new XSSFWorkbook(inp);
             
             String tablePrefix="2020_p0514092020ph2_hgg";
@@ -51,6 +51,9 @@ public class BaoCaoToms {
             
             Sheet8TocDoDL2 tocDoDL2 = new Sheet8TocDoDL2(fWorkbook, conn, 7,tablePrefix);
             tocDoDL2.run();
+            
+            Sheet9ListOfLogFile listOfLogFile=new Sheet9ListOfLogFile(fWorkbook, conn, 8, tablePrefix);
+            listOfLogFile.run();
 
             FileOutputStream os = new FileOutputStream("QCVN81_.xlsx");
             fWorkbook.setForceFormulaRecalculation(true);
